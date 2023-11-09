@@ -32,6 +32,21 @@ class PostsController < ApplicationController
     end
   end
 
+  def create_on_board_show  #unsure if this should be in posts or boards
+    the_post = Post.new
+    the_post.title = params.fetch("query_title")
+    the_post.body = params.fetch("query_body")
+    the_post.expires_on = params.fetch("query_expires_on")
+    the_post.board_id = params.fetch("board_id")  #im hoping this can pull from the url on the page where the form is located
+
+    if the_post.valid?
+      the_post.save
+      redirect_to("/boards/#{the_post.board_id}", { :notice => "Post added to board successfully." })
+    else
+      redirect_to("/boards/#{the_post.board_id}", { :alert => the_post.errors.full_messages.to_sentence })
+    end
+  end
+
   def update
     the_id = params.fetch("path_id")
     the_post = Post.where({ :id => the_id }).at(0)

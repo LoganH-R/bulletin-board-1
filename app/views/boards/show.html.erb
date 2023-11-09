@@ -1,23 +1,116 @@
 <div>
-  <div>
-    <h1>
-      Board #<%= @the_board.id %> details
-    </h1>
+  <h1>
+    <%= @the_board.name %>
+  </h1>
+</div>
 
+<hr>
+
+<div>
+  <h2>
+    Add a new post
+  </h2>
+
+  <form action="/insert_post/<%= @the_board.id %>" method="post">
     <div>
-      <div>
-        <a href="/boards">
-          Go back
-        </a>
-      </div>
+      <label for="title_box">
+        Title
+      </label>
 
-      <div>
-        <a href="/delete_board/<%= @the_board.id %>">
-          Delete board
-        </a>
-      </div>
+      <input type="text" id="title_box" name="query_title">
     </div>
 
+    <div>
+      <label for="body_box">
+        Body
+      </label>
+
+      <textarea id="body_box" name="query_body" rows="3"></textarea>
+    </div>
+
+    <div>
+      <label for="expires_on_box">
+        Expires on
+      </label>
+
+      <input type="date" id="expires_on_box" name="query_expires_on">
+    </div>
+
+    <button>
+      Create post
+    </button>
+  </form>
+</div>
+
+<hr>
+
+<h2> Active posts </h2>
+
+<div>
+    <table border="1">
+      <tr>
+        <th>
+          Title
+        </th>
+
+        <th>
+          Body
+        </th>
+
+        <th>
+          Posted on
+        </th>
+
+        <th>
+          Expires on
+        </th>
+      </tr>
+
+      <% @the_board.each do |a_post| %>
+      <tr>
+        <td>
+          <%= a_post.title %>
+        </td>
+
+        <td>
+          <%= a_post.body %>
+        </td>
+
+        <td>
+          <%= a_post.created_at %>
+        </td>
+
+        <td>
+          <%= a_post.expires_on %>
+        </td>
+
+
+        <td>
+          <%= time_ago_in_words(a_post.created_at) %> ago
+        </td>
+        <td>
+          <%= time_ago_in_words(a_post.updated_at) %> ago
+        </td>
+
+        <td>
+          <a href="/posts/<%= a_post.id %>">
+            Show details
+          </a>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+
+
+
+<h2> Expired posts </h2>
+
+
+
+
+
+<hr>
     <dl>
       <dt>
         Name

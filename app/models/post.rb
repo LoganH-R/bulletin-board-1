@@ -11,4 +11,6 @@
 #  board_id   :integer
 #
 class Post < ApplicationRecord
+  belongs_to(:board)
+    #belongs_to(:board, class_name: "Board", foreign_key: "board_id")
 end
