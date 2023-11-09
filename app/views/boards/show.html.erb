@@ -36,8 +36,10 @@
       <input type="date" id="expires_on_box" name="query_expires_on">
     </div>
 
+    <input type="hidden" id="board_id_box" name="query_board_id" value="<%= @the_board.id %>">
+
     <button>
-      Create post
+      Add post
     </button>
   </form>
 </div>
@@ -66,99 +68,68 @@
         </th>
       </tr>
 
-      <% @the_board.each do |a_post| %>
-      <tr>
-        <td>
-          <%= a_post.title %>
-        </td>
+      <% @list_of_active_posts.each do |a_post| %>
+        <tr>
+          <td>
+            <%= a_post.title %>
+          </td>
 
-        <td>
-          <%= a_post.body %>
-        </td>
+          <td>
+            <%= a_post.body %>
+          </td>
 
-        <td>
-          <%= a_post.created_at %>
-        </td>
+          <td>
+            <%= a_post.created_at.strftime("%b %e, %Y") %>
+          </td>
 
-        <td>
-          <%= a_post.expires_on %>
-        </td>
-
-
-        <td>
-          <%= time_ago_in_words(a_post.created_at) %> ago
-        </td>
-        <td>
-          <%= time_ago_in_words(a_post.updated_at) %> ago
-        </td>
-
-        <td>
-          <a href="/posts/<%= a_post.id %>">
-            Show details
-          </a>
-        </td>
-      </tr>
+          <td>
+            <%= a_post.expires_on.strftime("%b %e, %Y") %>
+          </td>
+        </tr>
       <% end %>
     </table>
   </div>
 
-
-
 <h2> Expired posts </h2>
 
-
-
-
-
-<hr>
-    <dl>
-      <dt>
-        Name
-      </dt>
-      <dd>
-        <%= @the_board.name %>
-      </dd>
-
-      <dt>
-        Created at
-      </dt>
-      <dd>
-        <%= time_ago_in_words(@the_board.created_at) %> ago
-      </dd>
-
-      <dt>
-        Updated at
-      </dt>
-      <dd>
-        <%= time_ago_in_words(@the_board.updated_at) %> ago
-      </dd>
-    </dl>
-  </div>
-</div>
-
-<hr>
-
-
 <div>
-  <div>
-    <h2>
-      Edit board
-    </h2>
+    <table border="1">
+      <tr>
+        <th>
+          Title
+        </th>
 
-    <form action="/modify_board/<%= @the_board.id %>"  method="post" >
-      <div>
-        <label for="name_box">
-          Name
-        </label>
+        <th>
+          Body
+        </th>
 
-        <input type="text" id="name_box" name="query_name" value="<%= @the_board.name %>">
-      </div>
+        <th>
+          Posted on
+        </th>
 
-      <button>
-        Update board
-      </button>
-    </form>
-  </div>
+        <th>
+          Expired on
+        </th>
+      </tr>
+
+      <% @list_of_expired_posts.each do |a_post| %>
+        <tr>
+          <td>
+            <%= a_post.title %>
+          </td>
+
+          <td>
+            <%= a_post.body %>
+          </td>
+
+          <td>
+            <%= a_post.created_at.strftime("%b %e, %Y") %>
+          </td>
+
+          <td>
+            <%= a_post.expires_on.strftime("%b %e, %Y") %>
+          </td>
+        </tr>
+      <% end %>
+  </table>
 </div>
-
-<hr>
